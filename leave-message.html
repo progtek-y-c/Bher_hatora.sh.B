@@ -11,28 +11,30 @@
     textarea { resize: vertical; height: 120px; }
     button { margin-top: 20px; padding: 12px 20px; border: none; border-radius: 8px; background: #2563eb; color: white; font-size: 16px; cursor: pointer; }
     button:hover { background: #1e4bb8; }
-#login-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #2563eb; /* כחול */
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  user-select: none; /* מונע סימון טקסט */
-  transition: background-color 0.3s;
-}
-
-#login-btn:hover {
-  background-color: #1d4ed8; /* כחול כהה בהצבעה מעל */
-}
+    #login-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2563eb;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+    }
+    #login-btn:hover {
+      background-color: #1d4ed8;
+    }
+    #status { text-align: center; margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
-<div id="login-btn" onclick="window.location.href='login.html'">חזרה לעמוד ההתחברות</div>
-  <h1>טופס פניה</h1>
-  <form id="contactForm">
+  <div id="login-btn" onclick="window.location.href='index.html'">חזרה לדף הבית</div>
+  <h1 style="text-align:center;">טופס פניה</h1>
+  
+  <form id="contactForm" method="POST" action="https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec" onsubmit="submitted=true;">
     <label for="name">שם מלא:</label>
     <input type="text" id="name" name="name" required>
 
@@ -51,7 +53,22 @@
     <button type="submit">שלח פניה</button>
   </form>
 
-  <p id="status" style="text-align:center; margin-top:20px;"></p>
-</body>
+  <!-- iFrame נסתר כדי למנוע רענון דף -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
+  <p id="status"></p>
+
+  <script>
+    var submitted = false;
+    document.getElementById("contactForm").addEventListener("submit", function() {
+      submitted = true;
+      setTimeout(function(){
+        if (submitted) {
+          document.getElementById("status").innerText = "✅ תודה! הפניה שלך נקלטה בהצלחה.";
+          document.getElementById("contactForm").reset();
+        }
+      }, 1000);
+    });
+  </script>
+</body>
 </html>
