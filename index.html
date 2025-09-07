@@ -195,6 +195,7 @@ document.addEventListener('mouseup', e => {
     // אם אין התחברות → חזרה לדף login
     window.location.href = "login.html";
   }
+    </script>
   <script>
 // נניח שכבר התחברת עם גוגל
 const user = JSON.parse(localStorage.getItem("user")); // מהקובץ google_login_extension.html
@@ -227,13 +228,14 @@ if (!user) {
       window.location.href = "block.html";
     });
 }
+  </script>
+      
 <script>
   document.getElementById('logout-btn').addEventListener('click', function(e) {
     e.preventDefault();               // מונע מעבר לקישור
     localStorage.removeItem('user');  // מוחק את נתוני המשתמש
     window.location.href = "login.html"; // מפנה לדף ההתחברות
   });
-</script>
 </script>
 </body>
   </html>
