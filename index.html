@@ -14,43 +14,46 @@
   --accent: #2563eb;
   --accent-2: #10b981;
   --radius: 16px;
-.yeshiva-btn }
 }
-  display: inline-block;{
-  padding: 10px 20px;
-  border: 2px solid #0038FF;   /* מסגרת שחורה דקה */
-  border-radius: 10px;       /* קצוות מעוגלים */
-  background-color: transparent; /* שקוף */
-  color: #0062FF;
-  text-decoration: none;     /* בלי קו מתחת */
-  font-family: Arial, sans-serif;
-}
-.chet-rashi-btn{
+
+.yeshiva-btn {
   display: inline-block;
   padding: 10px 20px;
-  border: 2px solid #0038FF;   /* מסגרת שחורה דקה */
-  border-radius: 10px;       /* קצוות מעוגלים */
-  background-color: transparent; /* שקוף */
-  color: ##0062FF;
-  text-decoration: none;     /* בלי קו מתחת */
+  border: 2px solid #0038FF;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #0062FF;
+  text-decoration: none;
   font-family: Arial, sans-serif;
 }
+
+.chet-rashi-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #0038FF;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #0062FF;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+}
+
 html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans"; }
 
-/* רקע האתר */
 body {
-  background-color: var(--bg); /* רקע אחיד */
+  background-color: var(--bg);
   background-image: url('https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI');
-  background-size: cover;      /* תמונה מתאימה לכל המסך */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: var(--text);
 }
+
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
 .container { width: min(1100px, 92%); margin: 0 auto; }
 
-/* סרגל עליון */
 header {
   position: sticky; top: 0; z-index: 10;
   background: rgba(255,255,255,0.85);
@@ -59,12 +62,12 @@ header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px;
 }
+
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
 .hamburger { font-size: 28px; cursor: pointer; display: inline-block; }
 .search-bar { margin-left: 10px; flex: 1; }
 .search-bar input { width: 100%; padding: 6px 35px; border-radius: 999px; border: 1px solid #e5e7eb; }
 
-/* תפריט צדדי */
 .side-menu {
   height: 100%; width: 0; position: fixed; z-index: 20;
   top: 0; right: 0; background-color: rgba(255,255,255,0.97);
@@ -75,34 +78,26 @@ header {
 .side-menu .top-icons { display: flex; justify-content: space-between; gap: 10px; padding: 0 24px; margin-bottom: 24px; font-size: 22px; }
 .closebtn { position: absolute; top: 20px; left: 20px; font-size: 36px; cursor: pointer; }
 
-/* אזור פתיח */
 .hero { padding: 60px 0 40px; text-align: center; }
 .hero-card { background: var(--card); border: 2px solid #e5e7eb; border-radius: var(--radius); padding: 36px; display: inline-block; box-shadow: 0 8px 28px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
 .hero-card:hover { transform: translateY(-5px); }
 .hero h1 { margin: 0; font-size: clamp(32px, 5vw, 48px); color: var(--accent); text-shadow: 1px 1px 4px rgba(0,0,0,0.2); }
 .hero p { margin: 12px 0 0; color: var(--muted); font-size: 20px; }
 
-/* רשימת אופציות ראשיות */
 .main-options { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 36px; }
 .main-options a { flex: 1 1 250px; text-align: center; padding: 16px; border-radius: var(--radius); background: var(--card); box-shadow: 0 6px 18px rgba(0,0,0,0.06); font-weight: 700; font-size: 17px; transition: all 0.3s ease; }
 .main-options a:hover { background: var(--accent); color: #fff; transform: translateY(-3px); }
 
-/* Footer */
 footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; text-align: center; font-size: 14px; }
 </style>
 </head>
 <body>
+
 <header>
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
     <div class="brand">
       <span class="hamburger" onclick="openMenu()">&#9776;</span>
-      <div>
-  
-      <div class="brand">
-  <img src="logo.png" alt="לוגו האתר" style="height:100px; width:auto; margin-right:80px;">
-  <div>
-
-</div>
+      <img src="logo.png" alt="לוגו האתר" style="height:100px; width:auto; margin-right:80px;">
     </div>
     <div class="search-bar">
       <input type="text" placeholder="חיפוש...">
@@ -110,7 +105,6 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
   </div>
 </header>
 
-<!-- תפריט שלוש פסים -->
 <div id="mySideMenu" class="side-menu">
   <span class="closebtn" onclick="closeMenu()">&times;</span>
   <div class="top-icons">
@@ -130,7 +124,7 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
   <a href="profile.html">נא לא להפריע</a>
   <a href="edit-profile.html">ערוך פרופיל</a>
   <a href="settings.html">הגדרות</a>
-<a href="#" id="logout-btn">התנתקות</a>
+  <a href="#" id="logout-btn">התנתקות</a>
 </div>
 
 <main class="container">
@@ -138,7 +132,7 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
   <div class="hero-card">
     <h1>ברוכים הבאים לאתר "פרוסטערים וגולשים בשעמום"</h1>
     <p>האתר של שיעור ב ישיבת באר התורה</p>
-        <p>        <small class="muted">שימו ❤️ האתר בשלבי בניה, לא כל האופציות יעבדו, לדיווח על תקלות היכנסו <a>לפניה למערכת.</a></p>
+    <p><small class="muted">שימו ❤️ האתר בשלבי בניה, לא כל האופציות יעבדו, לדיווח על תקלות היכנסו <a href="#">לפניה למערכת</a>.</small></p>
   </div>
 </section>
 
@@ -159,89 +153,60 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
 </main>
 
 <footer>
-© <span id="year"></span>  אתר  פרוסטערים וגולשים בשעמום – פותח על ידי יהודה כהן. לפרטים ובקשות פיתוח פנו אלינו בפלאפון 077263874 במייל ggg358102@gmail.com או באתר 
+© <span id="year"></span>  אתר פרוסטערים וגולשים בשעמום – פותח על ידי יהודה כהן. לפרטים ובקשות פיתוח פנו אלינו בפלאפון 077263874 במייל ggg358102@gmail.com
 </footer>
 
 <script>
-  // הצגת השנה אוטומטית
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  // תפריט צדדי
-  const sideMenu = document.getElementById("mySideMenu");
-  function openMenu() { sideMenu.style.width = "300px"; }
-  function closeMenu() { sideMenu.style.width = "0"; }
+// תפריט צדדי
+const sideMenu = document.getElementById("mySideMenu");
+function openMenu(){ sideMenu.style.width="300px"; }
+function closeMenu(){ sideMenu.style.width="0"; }
 
-  // סגירת תפריט בלחיצה מחוץ לו
-  document.addEventListener('click', function(event) {
-    if (!sideMenu.contains(event.target) && !event.target.classList.contains('hamburger')) {
-      closeMenu();
-    }
-  });
+document.addEventListener('click', function(event){
+  if(!sideMenu.contains(event.target) && !event.target.classList.contains('hamburger')){
+    closeMenu();
+  }
+});
 
-  // גרירת עכבר לסגירה
-  let isDragging = false;
-  let startX = 0;
-  sideMenu.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; });
-  document.addEventListener('mouseup', e => {
-    if(isDragging) {
-      let diff = startX - e.clientX;
-      if(diff > 100) closeMenu(); // החלקה ימינה
-    }
-    isDragging = false;
-  });
+// גרירת עכבר לסגירה
+let isDragging=false, startX=0;
+sideMenu.addEventListener('mousedown', e=>{ isDragging=true; startX=e.clientX; });
+document.addEventListener('mouseup', e=>{
+  if(isDragging && (startX - e.clientX > 100)) closeMenu();
+  isDragging=false;
+});
 
-  // בדיקה אם המשתמש מחובר
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) {
-    window.location.href = "login.html"; // אם לא מחובר → הפניה לדף התחברות
-  } else {
-<script>
-const user = JSON.parse(localStorage.getItem("user"));
-if (!user) {
-  window.location.href = "login.html";
+// בדיקת משתמש מורשה
+const user=JSON.parse(localStorage.getItem("user"));
+if(!user){
+  window.location.href="login.html";
 } else {
   fetch('email_name+.txt')
-    .then(response => response.text())
-    .then(text => {
-      const lines = text.trim().split('\n');
-      let found = false;
-      for (let line of lines) {
-        const parts = line.split(',');
-        const email = parts[2]?.trim();
-        if (email && email === user.email) {
-          found = true;
-          break;
-        }
+    .then(r=>r.text())
+    .then(text=>{
+      const lines=text.trim().split('\n');
+      let found=false;
+      for(let line of lines){
+        const parts=line.split(',');
+        const email=parts[2]?.trim();
+        if(email && email===user.email){ found=true; break; }
       }
-      if (!found) {
-        window.location.href = "block.html";
-      }
+      if(!found) window.location.href="block.html";
     })
-    .catch(err => {
-      console.error(err);
-      window.location.href = "block.html";
-    });
+    .catch(err=>{ console.error(err); window.location.href="block.html"; });
 }
-        if (!found) {
-          window.location.href = "block.html"; // חסום כניסה אם לא מורשה
-        }
-        // אם מורשה – ממשיך בדף
-      })
-      .catch(err => {
-        console.error('שגיאה בטעינת רשימת המורשים:', err);
-        window.location.href = "block.html";
-      });
-  }
 
-  // כפתור התנתקות
-  const logoutBtn = document.getElementById('logout-btn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      localStorage.removeItem('user');
-      window.location.href = "login.html";
-    });
-  }
+// כפתור התנתקות
+const logoutBtn=document.getElementById('logout-btn');
+if(logoutBtn){
+  logoutBtn.addEventListener('click', e=>{
+    e.preventDefault();
+    localStorage.removeItem('user');
+    window.location.href="login.html";
+  });
+}
 </script>
 </body>
-    </html>
+</html>
