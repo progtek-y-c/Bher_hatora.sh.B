@@ -194,19 +194,33 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
   if (!user) {
     window.location.href = "login.html"; // אם לא מחובר → הפניה לדף התחברות
   } else {
-    // בדיקה אם המייל קיים ברשימת מורשים
-    fetch('email_name+.txt')
-      .then(response => response.text())
-      .then(text => {
-        const lines = text.trim().split('\n');
-        let found = false;
-        for (let line of lines) {
-          const [email, name] = line.split(',');
-          if (email.trim() === user.email) {
-            found = true;
-            break;
-          }
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) {
+  window.location.href = "login.html";
+} else {
+  fetch('email_name+.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.trim().split('\n');
+      let found = false;
+      for (let line of lines) {
+        const parts = line.split(',');
+        const email = parts[2]?.trim();
+        if (email && email === user.email) {
+          found = true;
+          break;
         }
+      }
+      if (!found) {
+        window.location.href = "block.html";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      window.location.href = "block.html";
+    });
+}
         if (!found) {
           window.location.href = "block.html"; // חסום כניסה אם לא מורשה
         }
