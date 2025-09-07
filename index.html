@@ -162,80 +162,71 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
 </footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
-const sideMenu = document.getElementById("mySideMenu");
+  // הצגת השנה אוטומטית
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-function openMenu() { sideMenu.style.width = "300px"; }
-function closeMenu() { sideMenu.style.width = "0"; }
+  // תפריט צדדי
+  const sideMenu = document.getElementById("mySideMenu");
+  function openMenu() { sideMenu.style.width = "300px"; }
+  function closeMenu() { sideMenu.style.width = "0"; }
 
-// סגירת תפריט בלחיצה מחוץ לו
-document.addEventListener('click', function(event) {
-  if (!sideMenu.contains(event.target) && !event.target.classList.contains('hamburger')) {
-    closeMenu();
-  }
-});
-
-// אפשרות לגרירה לסגירה (גרירת עכבר)
-let isDragging = false;
-let startX = 0;
-sideMenu.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; });
-document.addEventListener('mouseup', e => {
-  if(isDragging) {
-    let diff = startX - e.clientX;
-    if(diff > 100) closeMenu(); // החלקה ימינה
-  }
-  isDragging = false;
-});
-</script>
-<script>
-  // בדיקה אם המשתמש מחובר (קיים ב-localStorage)
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user) {
-    // אם אין התחברות → חזרה לדף login
-    window.location.href = "login.html";
-  }
-    </script>
-  <script>
-// נניח שכבר התחברת עם גוגל
-const user = JSON.parse(localStorage.getItem("user")); // מהקובץ google_login_extension.html
-
-if (!user) {
-  // לא מחובר, הפניה לדף התחברות
-  window.location.href = "login.html";
-} else {
-  // בדיקה אם המייל קיים
-  fetch('email_name+.txt')
-    .then(response => response.text())
-    .then(text => {
-      const lines = text.trim().split('\n');
-      let found = false;
-      for (let line of lines) {
-        const [email, name] = line.split(',');
-        if (email.trim() === user.email) {
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        // אם המייל לא קיים – חסום כניסה
-        window.location.href = "block.html";
-      }
-      // אם קיים – ממשיכים בדף
-    })
-    .catch(err => {
-      console.error('שגיאה בטעינת רשימת המורשים:', err);
-      window.location.href = "block.html";
-    });
-}
-  </script>
-      
-<script>
-  document.getElementById('logout-btn').addEventListener('click', function(e) {
-    e.preventDefault();               // מונע מעבר לקישור
-    localStorage.removeItem('user');  // מוחק את נתוני המשתמש
-    window.location.href = "login.html"; // מפנה לדף ההתחברות
+  // סגירת תפריט בלחיצה מחוץ לו
+  document.addEventListener('click', function(event) {
+    if (!sideMenu.contains(event.target) && !event.target.classList.contains('hamburger')) {
+      closeMenu();
+    }
   });
+
+  // גרירת עכבר לסגירה
+  let isDragging = false;
+  let startX = 0;
+  sideMenu.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; });
+  document.addEventListener('mouseup', e => {
+    if(isDragging) {
+      let diff = startX - e.clientX;
+      if(diff > 100) closeMenu(); // החלקה ימינה
+    }
+    isDragging = false;
+  });
+
+  // בדיקה אם המשתמש מחובר
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    window.location.href = "login.html"; // אם לא מחובר → הפניה לדף התחברות
+  } else {
+    // בדיקה אם המייל קיים ברשימת מורשים
+    fetch('email_name+.txt')
+      .then(response => response.text())
+      .then(text => {
+        const lines = text.trim().split('\n');
+        let found = false;
+        for (let line of lines) {
+          const [email, name] = line.split(',');
+          if (email.trim() === user.email) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          window.location.href = "block.html"; // חסום כניסה אם לא מורשה
+        }
+        // אם מורשה – ממשיך בדף
+      })
+      .catch(err => {
+        console.error('שגיאה בטעינת רשימת המורשים:', err);
+        window.location.href = "block.html";
+      });
+  }
+
+  // כפתור התנתקות
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      window.location.href = "login.html";
+    });
+  }
 </script>
 </body>
-  </html>
+    </html>
