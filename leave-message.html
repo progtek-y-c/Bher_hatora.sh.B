@@ -34,7 +34,7 @@
   <div id="login-btn" onclick="window.location.href='index.html'">חזרה לדף הבית</div>
   <h1 style="text-align:center;">טופס פניה</h1>
   
-  <form id="contactForm" method="POST" action="https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec" onsubmit="submitted=true;">
+  <form id="contactForm">
     <label for="name">שם מלא:</label>
     <input type="text" id="name" name="name" required>
 
@@ -53,21 +53,24 @@
     <button type="submit">שלח פניה</button>
   </form>
 
-  <!-- iFrame נסתר כדי למנוע רענון דף -->
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
   <p id="status"></p>
 
   <script>
-    var submitted = false;
-    document.getElementById("contactForm").addEventListener("submit", function() {
-      submitted = true;
-      setTimeout(function(){
-        if (submitted) {
-          document.getElementById("status").innerText = "✅ תודה! הפניה שלך נקלטה בהצלחה.";
-          document.getElementById("contactForm").reset();
-        }
-      }, 1000);
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec";
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault(); // מונע טעינה מחדש של הדף
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(() => {
+          status.innerText = "✅ תודה! הפניה שלך נקלטה בהצלחה.";
+          form.reset();
+        })
+        .catch(error => {
+          status.innerText = "❌ שגיאה בשליחת הטופס. נסה שוב.";
+          console.error("Error!", error.message);
+        });
     });
   </script>
 </body>
