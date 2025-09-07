@@ -195,6 +195,39 @@ document.addEventListener('mouseup', e => {
     // אם אין התחברות → חזרה לדף login
     window.location.href = "login.html";
   }
+  <script>
+// נניח שכבר התחברת עם גוגל
+const user = JSON.parse(localStorage.getItem("user")); // מהקובץ google_login_extension.html
+
+if (!user) {
+  // לא מחובר, הפניה לדף התחברות
+  window.location.href = "login.html";
+} else {
+  // בדיקה אם המייל קיים
+  fetch('email_name+.txt')
+    .then(response => response.text())
+    .then(text => {
+      const lines = text.trim().split('\n');
+      let found = false;
+      for (let line of lines) {
+        const [email, name] = line.split(',');
+        if (email.trim() === user.email) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        // אם המייל לא קיים – חסום כניסה
+        window.location.href = "block.html";
+      }
+      // אם קיים – ממשיכים בדף
+    })
+    .catch(err => {
+      console.error('שגיאה בטעינת רשימת המורשים:', err);
+      window.location.href = "block.html";
+    });
+}
+</script>
 </script>
 </body>
   </html>
