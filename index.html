@@ -130,7 +130,6 @@ footer { padding: 36px 0; color: var(--muted); border-top: 1px solid #e5e7eb; te
   <a href="edit-profile.html">ערוך פרופיל</a>
   <a href="settings.html">הגדרות</a>
 <a href="#" id="logout-btn">התנתקות</a>
-
 </div>
 
 <main class="container">
@@ -228,14 +227,12 @@ if (!user) {
       window.location.href = "block.html";
     });
 }
-  
 <script>
-document.getElementById('logout-btn').addEventListener('click', function(e) {
-  e.preventDefault();               // מונע ניווט רגיל
-  localStorage.removeItem('user');  // מוחק את המשתמש
-  window.location.href = "login.html"; // מחזיר לדף התחברות
-});
-</script>
+  document.getElementById('logout-btn').addEventListener('click', function(e) {
+    e.preventDefault();               // מונע מעבר לקישור
+    localStorage.removeItem('user');  // מוחק את נתוני המשתמש
+    window.location.href = "login.html"; // מפנה לדף ההתחברות
+  });
 </script>
 </script>
 </body>
