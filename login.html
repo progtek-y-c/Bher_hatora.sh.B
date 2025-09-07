@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>התחברות עם גוגל</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #f0f0f0;
+    }
+    h2 {
+      color: #333;
+    }
+    #g_id_signin {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>ברוך הבא – התחבר עם גוגל</h2>
+
+  <div id="g_id_signin"></div>
+
+  <script>
+    function handleCredentialResponse(response) {
+      const token = response.credential;
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      // שמירה ב-localStorage
+      localStorage.setItem("user", JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture
+      }));
+
+      // הפניה לדף הראשי
+      window.location.href = "index.html";
+    }
+
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: '193606302813-lsr5mrj4n8l707javi1h0lfe585bgurm.apps.googleusercontent.com',
+        callback: handleCredentialResponse
+      });
+
+      // יצירת כפתור התחברות
+      google.accounts.id.renderButton(
+        document.getElementById('g_id_signin'),
+        { theme: 'outline', size: 'large', text: 'signin_with' }
+      );
+
+      // אפשרות One Tap אם רוצים
+      // google.accounts.id.prompt();
+    };
+  </script>
+</body>
+</html>
