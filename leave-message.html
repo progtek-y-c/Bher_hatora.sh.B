@@ -56,20 +56,20 @@
   <p id="status"></p>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec"; 
     const form = document.getElementById("contactForm");
     const status = document.getElementById("status");
 
-    form.addEventListener("submit", e => {
-      e.preventDefault(); // מונע טעינה מחדש של הדף
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); // מונע מעבר לדף OK
       fetch(scriptURL, { method: "POST", body: new FormData(form)})
         .then(() => {
           status.innerText = "✅ תודה! הפניה שלך נקלטה בהצלחה.";
           form.reset();
         })
-        .catch(error => {
-          status.innerText = "❌ שגיאה בשליחת הטופס. נסה שוב.";
-          console.error("Error!", error.message);
+        .catch((error) => {
+          status.style.color = "red";
+          status.innerText = "❌ שגיאה בשליחה: " + error;
         });
     });
   </script>
