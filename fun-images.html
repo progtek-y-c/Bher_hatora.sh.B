@@ -108,7 +108,7 @@
   <h1>גלריית פוסטים</h1>
   <div class="actions">
     <button onclick="location.href='index.html'">דף הבית</button>
-    <button id="addPostBtn">➕ פוסט חדש</button>
+    <button id="addPostBtn">➕ תמונה חדשה</button>
   </div>
 </header>
 
@@ -122,7 +122,7 @@
 </div>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx8cm364D7_7lR3XhZG7smWE96q8kNTtEjoLpOdJv9KGVN8T7XaqhVwJ6gP4N2mXTmU/exec"; 
+const WEB_APP_URL = "1kEOPo416KivYf_ZRrzgwN69XTIn6G-jk"; 
 
 const gallery = document.getElementById("gallery");
 const fileInput = document.getElementById("fileInput");
@@ -136,7 +136,7 @@ fileInput.addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  let name = prompt("הכנס שם לפוסט (עד 50 תווים):");
+  let name = prompt("הכנס כותרת לתמונה (עד 50 תווים):");
   if (!name) return;
   if (name.length > 50) name = name.substring(0,50);
 
