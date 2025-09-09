@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>גלריית פוסטים</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #007bff;
+      color: white;
+      padding: 15px 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    header .actions {
+      display: flex;
+      gap: 15px;
+    }
+    header button {
+      background: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    header button:hover {
+      background: #e0e0e0;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    .card p {
+      margin: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+    .card .options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px;
+    }
+    .card button {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .card button.delete {
+      background: #dc3545;
+    }
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>גלריית פוסטים</h1>
+  <div class="actions">
+    <button onclick="location.href='index.html'">דף הבית</button>
+    <button id="addPostBtn">➕ פוסט חדש</button>
+  </div>
+</header>
+
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+
+<div class="gallery" id="gallery"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img id="lightboxImg" src="">
+</div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx8cm364D7_7lR3XhZG7smWE96q8kNTtEjoLpOdJv9KGVN8T7XaqhVwJ6gP4N2mXTmU/exec"; 
+
+const gallery = document.getElementById("gallery");
+const fileInput = document.getElementById("fileInput");
+const addPostBtn = document.getElementById("addPostBtn");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+
+addPostBtn.onclick = () => fileInput.click();
+
+fileInput.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  let name = prompt("הכנס שם לפוסט (עד 50 תווים):");
+  if (!name) return;
+  if (name.length > 50) name = name.substring(0,50);
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const base64Data = reader.result.split(",")[1];
+    const formData = new URLSearchParams();
+    formData.append("name", name);
+    formData.append("type", file.type);
+    formData.append("data", base64Data);
+
+    await fetch(WEB_APP_URL, { method: "POST", body: formData });
+    fetchImages();
+  };
+  reader.readAsDataURL(file);
+});
+
+async function fetchImages() {
+  gallery.innerHTML = "";
+  const res = await fetch(WEB_APP_URL);
+  const files = await res.json();
+  files.forEach(file => {
+    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const img = document.createElement("img");
+      img.src = WEB_APP_URL + "?fileId=" + file.id;
+      img.onclick = () => openLightbox(img.src);
+
+      const text = document.createElement("p");
+      text.textContent = file.name;
+
+      const options = document.createElement("div");
+      options.className = "options";
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "🗑 מחק";
+      deleteBtn.className = "delete";
+      deleteBtn.onclick = async () => {
+        if (confirm("למחוק את הפוסט?")) {
+          await fetch(WEB_APP_URL + "?action=delete&id=" + file.id);
+          fetchImages();
+        }
+      };
+
+      options.appendChild(deleteBtn);
+
+      card.appendChild(img);
+      card.appendChild(text);
+      card.appendChild(options);
+      gallery.appendChild(card);
+    }
+  });
+}
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.style.display = "flex";
+}
+
+lightbox.onclick = () => {
+  lightbox.style.display = "none";
+};
+
+fetchImages();
+</script>
+</body>
+</html>
