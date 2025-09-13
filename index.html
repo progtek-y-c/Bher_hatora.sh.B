@@ -247,5 +247,35 @@ window.addEventListener('load', () => {
   }, 4000);
 });
 </script>
+  <script>
+// פונקציה שבודקת אם להציג את הספלש
+function shouldShowSplash() {
+  const lastShown = localStorage.getItem("splashShownAt");
+  const now = Date.now();
+  const oneHour = 60 * 60 * 1000;
+
+  if (!lastShown || (now - lastShown > oneHour)) {
+    
+    localStorage.setItem("splashShownAt", now);
+    return true;
+  }
+  return false;
+}
+
+window.addEventListener("load", () => {
+  const splash = document.getElementById("splash");
+
+  if (shouldShowSplash()) {
+    setTimeout(() => {
+      if (splash) splash.style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 4000); 
+  } else {
+    
+    if (splash) splash.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+});
+  </script>
 </body>
 </html>
