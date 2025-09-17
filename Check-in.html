@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>טופס רישום</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 40px; }
+    form { background: #fff; padding: 20px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 12px 20px; border: none; border-radius: 8px; background: #2563eb; color: white; font-size: 16px; cursor: pointer; }
+    button:hover { background: #1e4bb8; }
+    #login-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2563eb;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      user-select: none;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+    }
+    #login-btn:hover { background-color: #1d4ed8; }
+    #status { text-align: center; margin-top: 20px; font-weight: bold; }
+    .checkbox-label { font-weight: normal; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div id="login-btn" onclick="window.location.href='index.html'">חזרה לדף הבית</div>
+  <h1 style="text-align:center;">טופס רישום</h1>
+  
+  <form id="registerForm">
+    <label for="name">שם מלא:</label>
+    <input type="text" id="name" name="name" required
+      oninvalid="this.setCustomValidity('אנא הזן את שמך המלא')"
+      oninput="this.setCustomValidity('')">
+
+    <label for="address">כתובת מגורים (ישראל):</label>
+    <input type="text" id="address" name="address" required
+      oninvalid="this.setCustomValidity('אנא הכנס כתובת מגורים בישראל')"
+      oninput="this.setCustomValidity('')">
+
+    <label for="email">אימייל:</label>
+    <input type="email" id="email" name="email" required
+      oninvalid="this.setCustomValidity('אנא הקלד כתובת אימייל תקינה')"
+      oninput="this.setCustomValidity('')">
+
+    <label for="phone">טלפון:</label>
+    <input type="tel" id="phone" name="phone" required pattern="[0-9]{9,10}"
+      oninvalid="this.setCustomValidity('אנא הקלד מספר טלפון תקין בעל 9–10 ספרות')"
+      oninput="this.setCustomValidity('')">
+
+    <!-- שדה חבוי שישלח אוטומטית לעמודה 4 -->
+    <input type="hidden" id="message" name="message" value="בקשת הצטרפות">
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="terms" name="terms" required
+        oninvalid="this.setCustomValidity('חובה לאשר את התקנון לפני ההרשמה')"
+        oninput="this.setCustomValidity('')">
+      אני מאשר כי קראתי את <a href="all-tmugi.html" target="_blank">תקנון הפורום</a> ואני מסכים לו
+    </label>
+    
+    <button type="submit">שלח בקשת רישום</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwfYtKrrHsSDOOBSdDPgfARfPvoN9tVIgJVLJIrXr9oJKe5SGltwOE5yp5p_NoeNsGO/exec"; 
+    const form = document.getElementById("registerForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // הודעת המתנה
+      status.style.color = "black";
+      status.innerText = "⏳ אנא המתן... הבקשה נשלחת";
+
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(() => {
+          status.style.color = "green";
+          status.innerText = "✅ תודה! בקשת הרישום נקלטה בהצלחה.";
+          form.reset();
+        })
+        .catch((error) => {
+          status.style.color = "red";
+          status.innerText = "❌ שגיאה בשליחה: " + error;
+        });
+    });
+  </script>
+</body>
+    </html>
